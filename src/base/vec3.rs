@@ -62,12 +62,3 @@ where
         }
     }
 }
-
-fn main() {
-    // let r = Vec3::new(0, 0, 0);
-    // let p = Vec3::new(0, 0, 0);
-    // let m = 64;
-    // let n = Particle::new(r, p, m);
-
-    // println!("Particle has position: {:?}; velocity {:?}; and mass {:?}.", n.r, n.v, n.m);
-}

@@ -1,3 +1,4 @@
+#![allow(dead_code)]
 pub use crate::base::vec3::Vec3;
 
 #[derive(Debug, Copy, Clone)]
@@ -19,8 +20,4 @@ impl Particle {
     pub fn get_t(self) -> f64 {
         return 0.5*(self.m)*(self.v.dot(&self.v));
     }
-}
-
-fn main () {
-    println!("Hello world!");
 }
