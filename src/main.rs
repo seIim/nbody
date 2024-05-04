@@ -19,4 +19,7 @@ fn main() {
     println!("Here is a particle: {:?}.", particle);
 
     println!("Here is the partiles energy: {:?}", particle.get_t());
+
+    let vec3 = Vec3::default();
+    println!("Here is a default vector: {:?}.", vec3);
 }
