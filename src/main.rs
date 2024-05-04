@@ -1,13 +1,8 @@
 #![allow(dead_code)]
-pub mod bodies {
-    pub mod particle;
-}
-pub mod base {
-    pub mod vec3;
-}
-
-pub use base::vec3::Vec3;
-pub use bodies::particle::Particle;
+extern crate mylib;
+// pub use mylib;
+pub use mylib::base::vec3::Vec3;
+pub use mylib::bodies::particle::Particle;
 
 fn main() {
     let vec1 = Vec3::new(1, 1, 1);
