@@ -33,6 +33,8 @@ impl System {
     // the EOM and solver specified for the system. TODO: everything
     pub fn step(&mut self){
         // I want the solver to have the functionality: solver(&self, &p: &Particle, EOM) --> Particle
+        // NOTE: The solver numerically finds xₙ₊₁, we will have a different module for calculating the
+        // magnitude of the gravity term using greedy / barnes huts / particle mesh or whatever else.
         for p in &mut self.particles {
             p.update_r(Vec3::new(1, 1, 1));
             p.update_v(Vec3::new(1, 1, 1));
