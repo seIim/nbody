@@ -13,8 +13,7 @@
  * Where velocity is given by the verlet velocity formula,
  *                      vₙ₊₁ = vₙ + aₙdt.
  * In general, this equation looks like
- *                      x(t) = F[x, x', x''],
- * which is readily solvable since x'' is prob constant or whateva.
+ *                      x(t) = F[x, x'].
 */
 
 pub use crate::Particle;
