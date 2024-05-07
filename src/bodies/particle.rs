@@ -1,5 +1,5 @@
 #![allow(dead_code)]
-pub use crate::base::vec3::Vec3;
+pub use crate::Vec3;
 
 #[derive(Debug, Copy, Clone)]
 pub struct Particle {
@@ -17,7 +17,15 @@ impl Particle {
         }
     }
 
-    pub fn get_t(self) -> f64 {
-        return 0.5*(self.m)*(self.v.dot(&self.v));
+    pub fn update_r(&mut self, value: Vec3) {
+        self.r = value;
+    }
+
+    pub fn update_v(&mut self, value: Vec3) {
+        self.v = value;
+    }
+
+    pub fn update_m(&mut self, value: f64) {
+        self.m = value;
     }
 }
