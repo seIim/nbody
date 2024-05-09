@@ -20,7 +20,7 @@ pub use crate::Particle;
 pub use crate::Vec3;
 
 pub struct System {
-    particles: Vec<Particle>,
+    pub particles: Vec<Particle>,
 }
 
 impl System {
