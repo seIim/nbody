@@ -1,6 +1,6 @@
 #![allow(dead_code)]
 #![allow(unused_doc_comments)]
-/**
+/*
  * PLAN: A system is a data structure which holds references to bodies.
  * Somehow, the system will be endowed with an EOM (equation of motion)
  * that tells the bodies how to move. The EOM will be integrated forward
@@ -34,9 +34,20 @@ impl System {
         }
     }
 
+    //TODO make the search a generic
+    pub fn energy(&self) -> f64 {
+        let mut energy = 0.0;
+        for (ind, p) in self.particles.iter().enumerate() {
+            energy += gravity::Energy::greedy(p, &self.particles, ind);
+            // kinetic energy
+            energy+= 0.5*p.m*(p.v.dot(&p.v)).powf(0.5);
+        }
+        return energy;
+    }
+
     // update the position and velocity of all particles according to 
-    // the EOM and solver specified for the system. TODO: everything
-    pub fn step(&mut self, f: fn(&Particle, &Vec<Particle>, f64, usize) -> Particle) {
+    // the EOM and solver specified for the system.
+    pub fn step(&mut self, f: fn(&Particle, &Vec<Particle>, f64, usize) -> Particle){
         let all_particles = self.particles.clone();
         for (index, p) in self.particles.iter_mut().enumerate() {
             *p = f(p, &all_particles, DT, index);

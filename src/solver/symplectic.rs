@@ -1,5 +1,3 @@
-use std::default;
-
 /* symplectic.rs
 Suite of symplectic integrators.
 Following the methods shown in this review article: https://pubs.aip.org/aapt/ajp/article/73/10/938/1042416/Symplectic-integrators-An-introduction.
@@ -14,13 +12,9 @@ pub struct Solver {
 impl Solver {
     
     pub fn verlet_first_order (p: &Particle, all_ps: &Vec<Particle>, dt: f64, ind: usize) -> Particle{
-        //calculate acceleration (and therefore force) on the body
-        let particles_clone = all_ps.clone(); // Clone the particles vector
-
-        let mut others: Vec<_> = Vec::new();
-        others.extend_from_slice(&particles_clone[..ind]);
-        others.extend_from_slice(&particles_clone[ind + 1..]);
-        let a = gravity::greedy(p, &others);
+        // gravity to acceleration
+        // TODO: make a generic search function that gets passed to the solver
+        let a = p.m*gravity::Force::greedy(p, all_ps, ind);
 
         // calculate new velocity first
         let vx = p.v.x + a*dt;
@@ -33,7 +27,7 @@ impl Solver {
         let y = p.r.y + vy*dt;
         let z = p.r.z + vz*dt;
         let _r = Vec3::new(x,y,z);
-        
+
         // return new particle
         return Particle::new(_r, _v, p.m);
     }
