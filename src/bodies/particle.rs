@@ -3,9 +3,9 @@ pub use crate::Vec3;
 
 #[derive(Debug, Copy, Clone)]
 pub struct Particle {
-    r: Vec3,
-    v: Vec3,
-    m: f64
+    pub r: Vec3,
+    pub v: Vec3,
+    pub m: f64
 }
 
 impl Particle {

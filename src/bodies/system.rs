@@ -18,7 +18,11 @@
 
 pub use crate::Particle;
 pub use crate::Vec3;
+pub use crate::gravity;
+pub use crate::symplectic::Solver;
 
+const DT: f64 = 0.05;
+#[derive(Debug, Clone)]
 pub struct System {
     pub particles: Vec<Particle>,
 }
@@ -29,16 +33,13 @@ impl System {
             particles: ps,
         }
     }
+
     // update the position and velocity of all particles according to 
     // the EOM and solver specified for the system. TODO: everything
-    pub fn step(&mut self){
-        // I want the solver to have the functionality: solver(&self, &p: &Particle, EOM) --> Particle
-        // NOTE: The solver numerically finds xₙ₊₁ given xₙ and some symplectic integration scheme; 
-        //we will have a different module for calculating the magnitude of the gravity term using greedy 
-        // / barnes huts / particle mesh or whatever other algorithm seems interesting to implement.
-        for p in &mut self.particles {
-            p.update_r(Vec3::new(1, 1, 1));
-            p.update_v(Vec3::new(1, 1, 1));
+    pub fn step(&mut self, f: fn(&Particle, &Vec<Particle>, f64, usize) -> Particle) {
+        let all_particles = self.particles.clone();
+        for (index, p) in self.particles.iter_mut().enumerate() {
+            *p = f(p, &all_particles, DT, index);
         }
     }
 
