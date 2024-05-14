@@ -5,7 +5,7 @@ pub use crate::Vec3;
 pub struct Particle {
     pub r: Vec3,
     pub v: Vec3,
-    pub a: [Vec3; 2],
+    pub a: [Vec3; 2], // unused as of right now but will make search must faster later
     pub m: f64
 }
 

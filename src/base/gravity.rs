@@ -10,22 +10,18 @@ pub const G: f64 = 6.6743015e-11;
 pub struct Force {}
 
 impl Force {
-    pub fn greedy (p: &Particle, all_ps: &Vec<Particle>, ind: usize) -> (f64, f64, f64) {
+    pub fn greedy (p: &Particle, all_ps: &Vec<Particle>, ind: usize) -> Vec3 {
 
         let mut others: Vec<_> = Vec::new();
         others.extend_from_slice(&all_ps[..ind]);
         others.extend_from_slice(&all_ps[ind + 1..]);
 
-        let mut fx: f64 = 0.0;
-        let mut fy: f64 = 0.0;
-        let mut fz: f64 = 0.0;
+        let mut f = Vec3::default();
         for _p in others.iter() {
             let d: f64 = (_p.r - p.r).dot(&(_p.r - p.r));
-            fx += G*_p.m*(_p.r.x - p.r.x)/(d.powf(1.5));
-            fy += G*_p.m*(_p.r.y - p.r.y)/(d.powf(1.5));
-            fz += G*_p.m*(_p.r.z - p.r.z)/(d.powf(1.5));
+            f = f + (_p.r - p.r)/(d.powf(1.5)) * G * _p.m;
         }
-        return (fx, fy, fz);
+        return f;
     }
 }
 pub struct Energy {}

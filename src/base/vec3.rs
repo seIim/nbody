@@ -1,6 +1,6 @@
 #![allow(dead_code)]
 
-pub use std::ops::{Add, Mul, Sub};
+pub use std::ops::{Add, Mul, Sub, Div};
 
 #[derive(Debug, Copy, Clone)]
 pub struct Vec3 {
@@ -55,6 +55,22 @@ impl Sub for Vec3 {
             x: self.x - other.x,
             y: self.y - other.y,
             z: self.z - other.z,
+        }
+    }
+}
+
+impl<T> Div<T> for Vec3
+where
+    T: Into<f64> + Copy,
+{
+    type Output = Vec3;
+
+    fn div(self, scalar: T) -> Vec3 {
+        let scalar_f64 = scalar.into();
+        Vec3 {
+            x: self.x/scalar_f64,
+            y: self.y/scalar_f64,
+            z: self.z/scalar_f64,
         }
     }
 }

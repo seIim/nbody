@@ -16,12 +16,12 @@
  *                      x(t) = F[x, x'].
 */
 
+use crate::symplectic;
 pub use crate::Particle;
 pub use crate::Vec3;
 pub use crate::gravity;
-pub use crate::symplectic::Solver;
 
-const DT: f64 = 0.001;
+const DT: f64 = 0.01;
 #[derive(Debug, Clone)]
 pub struct System {
     pub particles: Vec<Particle>,
@@ -32,6 +32,10 @@ impl System {
         Self {
             particles: ps,
         }
+    }
+
+    pub fn warmup(&mut self, solver: fn(&mut Vec<Particle>)){
+        solver(&mut self.particles);
     }
 
     //TODO make the search a generic
@@ -47,11 +51,8 @@ impl System {
 
     // update the position and velocity of all particles according to 
     // the EOM and solver specified for the system.
-    pub fn step(&mut self, f: fn(&Particle, &Vec<Particle>, f64, usize) -> Particle){
-        let all_particles: Vec<Particle> = self.particles.clone();
-        for (index, p) in self.particles.iter_mut().enumerate() {
-            *p = f(p, &all_particles, DT, index);
-        }
+    pub fn step(&mut self, s: &impl symplectic::Solver) {
+        s.step(&mut self.particles, DT);
     }
 
     pub fn record () {
