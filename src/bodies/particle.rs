@@ -5,14 +5,16 @@ pub use crate::Vec3;
 pub struct Particle {
     pub r: Vec3,
     pub v: Vec3,
+    pub a: [Vec3; 2],
     pub m: f64
 }
 
 impl Particle {
-    pub fn new<T: Into<f64>>(r: Vec3, v: Vec3, m: T) -> Particle {
+    pub fn new<T: Into<f64>>(r: Vec3, v: Vec3, a: [Vec3; 2], m: T) -> Particle {
         Particle {
             r,
             v,
+            a,
             m: m.into(),
         }
     }

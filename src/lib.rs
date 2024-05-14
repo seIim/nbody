@@ -1,3 +1,8 @@
+#![allow(
+    clippy::similar_names,
+    clippy::excessive_precision,
+    clippy::must_use_candidate
+)]
 pub mod bodies {
     pub mod particle;
     pub mod system;
