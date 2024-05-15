@@ -53,8 +53,8 @@ impl Solver for SymplecticEuler {
         let all_ps = ps.clone();
 
         for (ind, p) in ps.iter_mut().enumerate() {
-            (*p).a[0] = gravity::Force::greedy(&p, &all_ps, ind)*(p.m);
-            (*p).v = (*p).v + (*p).a[0]*dt;
+            let a = gravity::Force::greedy(&p, &all_ps, ind)*(p.m);
+            (*p).v = (*p).v + a*dt;
         }
     }
 
@@ -73,12 +73,15 @@ impl Solver for SymplecticEuler {
 
 impl SymplecticEuler {
 
-    pub fn warmup (ps: &mut Vec<Particle>) -> () {
-        let all_ps = ps.clone();
+    // pub fn warmup (ps: &mut Vec<Particle>) -> () {
+    //     let all_ps = ps.clone();
 
-        for (ind, p) in ps.iter_mut().enumerate() {
-            (*p).a[0] = gravity::Force::greedy(&p, &all_ps, ind)*(p.m);
-        }
-    }
+    //     for (ind, p) in ps.iter_mut().enumerate() {
+    //         (*p).a[0] = gravity::Force::greedy(&p, &all_ps, ind)*(p.m);
+    //     }
+    // }
 
 }
+
+pub struct Verlet {}
+
