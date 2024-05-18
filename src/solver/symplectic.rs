@@ -5,7 +5,9 @@ Following the methods shown in this review article: https://pubs.aip.org/aapt/aj
 pub use crate::gravity;
 pub use crate::Particle;
 pub use crate::Vec3;
-
+pub use rayon::iter::IntoParallelRefMutIterator;
+pub use rayon::iter::IndexedParallelIterator;
+pub use rayon::prelude::*;
 //     // also kick-drift-kick leapfrog integration
 //     pub fn verlet_second_order (all_ps: &Vec<Particle>, dt: f64) -> Vec<Particle>{
 
@@ -50,19 +52,18 @@ pub struct SymplecticEuler {}
 impl Solver for SymplecticEuler {
 
     fn update_velocity(&self, ps: &mut Vec<Particle>, dt:f64) -> () {
-        let all_ps = ps.clone();
+        let all_ps: Vec<Particle> = ps.clone();
 
-        for (ind, p) in ps.iter_mut().enumerate() {
-            let a = gravity::Force::greedy(&p, &all_ps, ind)*(p.m);
+        ps.par_iter_mut().enumerate().for_each(|(ind, p)|
+        {
+            let a: Vec3 = gravity::Force::greedy(&p, &all_ps, ind)*(p.m);
             (*p).v = (*p).v + a*dt;
-        }
+        } );
     }
 
     fn update_position(&self, ps: &mut Vec<Particle>, dt:f64) -> () {
 
-        for p in ps.iter_mut(){
-            (*p).r = (*p).r + (*p).v*dt;
-        }
+        ps.par_iter_mut().for_each(|p: &mut Particle| {(*p).r = (*p).r + (*p).v*dt;});
     }
 
     fn step(&self, ps: &mut Vec<Particle>, dt:f64) {

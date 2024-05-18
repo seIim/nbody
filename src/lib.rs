@@ -22,3 +22,5 @@ pub use base::vec3::Vec3;
 pub use base::gravity;
 
 pub use solver::symplectic;
+
+pub use rayon::prelude::*;
