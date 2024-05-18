@@ -54,15 +54,13 @@ impl Solver for SymplecticEuler {
     fn update_velocity(&self, ps: &mut Vec<Particle>, dt:f64) -> () {
         let all_ps: Vec<Particle> = ps.clone();
 
-        ps.par_iter_mut().enumerate().for_each(|(ind, p)|
-        {
+        ps.par_iter_mut().enumerate().for_each(|(ind, p)|{   
             let a: Vec3 = gravity::Force::greedy(&p, &all_ps, ind)*(p.m);
             (*p).v = (*p).v + a*dt;
         } );
     }
 
     fn update_position(&self, ps: &mut Vec<Particle>, dt:f64) -> () {
-
         ps.par_iter_mut().for_each(|p: &mut Particle| {(*p).r = (*p).r + (*p).v*dt;});
     }
 
