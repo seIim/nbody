@@ -5,6 +5,7 @@ TODO: SIMD optional, Barnes-Hut.
 pub use crate::System;
 pub use crate::Vec3;
 pub use crate::Particle;
+
 pub const G: f64 = 6.6743015e-11;
 
 pub struct Force {}
